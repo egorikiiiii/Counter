@@ -6,67 +6,72 @@
 //
 
 import UIKit
-import Foundation
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
-    var formatter = DateFormatter()
+    // MARK: - IB Outlets
+    @IBOutlet private weak var logsTextView: UITextView!
+    @IBOutlet private weak var counterValueLabel: UILabel!
+    @IBOutlet private weak var decrementButton: UIButton!
+    @IBOutlet private weak var incrementButton: UIButton!
+    @IBOutlet private weak var refreshButton: UIButton!
 
-    @IBOutlet weak var counterLabel: UILabel!
-    var counter: UInt = 0 {
+    // MARK: - Private Properties
+    private lazy var formatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
+        return dateFormatter
+    }()
+
+    private var counter: UInt = 0 {
         didSet {
-            setCounterLabelText()
+            updateCounterLabel()
         }
     }
-    private func setCounterLabelText() -> Void {
-        counterLabel.text = "Значение счётчика: \(counter)"
-    }
     
-    @IBOutlet weak var decrementButton: UIButton!
-    
-    @IBOutlet weak var incrementButton: UIButton!
-    
-    @IBOutlet weak var refreshButton: UIButton!
-    
-    @IBOutlet weak var logsTextView: UITextView!
-    private func updateLogsTextView(_ entry: String) -> Void {
-        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
-        let formattedEntry = "\n" + formatter.string(from: Date()) + ": " + entry
-        logsTextView.text.append(formattedEntry)
-        logsTextView.scrollRangeToVisible(NSMakeRange(logsTextView.text.count-1, 1))
-    }
-    
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        setCounterLabelText()
-        
+        updateCounterLabel()
+        configureLogsTextView()
+    }
+    
+    // MARK: - Private Methods
+    private func updateCounterLabel() -> Void {
+        counterValueLabel.text = "Значение счётчика: \(counter)"
+    }
+    
+    private func configureLogsTextView() -> Void {
         logsTextView.layer.borderWidth = 1
         logsTextView.layer.borderColor = UIColor.black.cgColor
     }
+    
+    private func appendLog(_ entry: String) -> Void {
+        let formattedEntry = "\n\(formatter.string(from: Date())): \(entry)"
+        logsTextView.text.append(formattedEntry)
+        logsTextView.scrollRangeToVisible(NSMakeRange(logsTextView.text.count-1, 1))
+    }
 
-    @IBAction func decrementButtonTap(_ sender: Any) {
-        var entry: String
+    // MARK: - IBActions
+    @IBAction private func decrementButtonTap(_ sender: Any) {
+        let entry: String
         if counter == 0 {
             entry = "попытка уменьшить значение счётчика ниже 0"
         } else {
             counter -= 1
             entry = "значение изменено на -1"
         }
-        updateLogsTextView(entry)
+        appendLog(entry)
     }
     
-    @IBAction func incrementButtonTap(_ sender: Any) {
+    @IBAction private func incrementButtonTap(_ sender: Any) {
         counter += 1
-        let entry = "значение изменено на +1"
-        updateLogsTextView(entry)
+        appendLog("значение изменено на +1")
     }
     
-    @IBAction func refreshButtonTap(_ sender: Any) {
+    @IBAction private func refreshButtonTap(_ sender: Any) {
         counter = 0
-        let entry = "значение сброшено"
-        updateLogsTextView(entry)
+        appendLog("значение сброшено")
     }
     
 }
-

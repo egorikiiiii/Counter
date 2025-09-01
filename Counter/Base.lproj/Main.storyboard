@@ -57,7 +57,7 @@
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" editable="NO" text="История изменений:" translatesAutoresizingMaskIntoConstraints="NO" id="H5C-UA-INd">
-                                <rect key="frame" x="55.786677897972822" y="142.00000000001182" width="280.00000000001739" height="280.00000000003467"/>
+                                <rect key="frame" x="0.0" y="143" width="280.00000000001739" height="280.00000000003467"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -69,7 +69,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <connections>
-                        <outlet property="counterLabel" destination="7yT-zX-5pu" id="FjG-Z5-vSz"/>
+                        <outlet property="counterValueLabel" destination="7yT-zX-5pu" id="PZx-d5-4RF"/>
                         <outlet property="decrementButton" destination="EYK-N8-GLc" id="BWL-9s-xnY"/>
                         <outlet property="incrementButton" destination="ETc-FJ-T4V" id="SM2-UA-oEc"/>
                         <outlet property="logsTextView" destination="H5C-UA-INd" id="0ye-gd-Npf"/>
